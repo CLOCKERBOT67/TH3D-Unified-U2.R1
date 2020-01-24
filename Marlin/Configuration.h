@@ -67,6 +67,9 @@
 // Sovol Machines -----------------------------------------------------------
 //#define SOVOL_SV01
 
+// Kingroon -----------------------------------------------------------------
+//#define KINGROON_KP3
+
 // Filament Sensor Options --------------------------------------------------
 // If your machine came stock with a filament sensor it will be enabled automatically. If you replaced your stock sensor with our EZOut or you added an EZOut enabling the EZOUTV2_ENABLE will override the Creality sensor if your machine had one
 
@@ -92,40 +95,29 @@
 //#define ENDER5_PLUS_EZABL
 //#define ENDER5_PLUS_NOABL
 
+// If you have the new Ender 5 or Ender 5 Pro Model that has the NEW LEADSCREW uncomment the below option to set the correct stepping mode for the Z driver
+//#define ENDER5_NEW_LEADSCREW
+
 // Advanced Settings --------------------------------------------------------
 // These settings do not typically need to be adjusted except for machines that do not follow stock configs
 
 // If you are using a modded machine with a higher Z height use the below option to change the height. This value is in mm.
 //#define CUSTOM_ZHEIGHT 400
 
-// If you have the new Ender 5 or Ender 5 Pro Model that has the new leadscrew uncomment the below option to set the correct stepping mode for the Z driver
-//#define ENDER5_NEW_LEADSCREW
-
 // Dual Z Motor Settings
 // When running dual Z motors uncomment the below line. This will increase the Z motor driver current for 2x motors.
 //#define DUAL_Z_MOTORS
 
-// Axis Direction Settings
+// Stepper Motor Direction Settings
 // If you need to reverse the direction of a motor uncomment the below option for that axis.
-// E motor settings are below in the Extruder Settings Section
+// When installing an extruder with a Geared ratio, you may need to enable the REVERSE_E_MOTOR_DIRECTION option unless you reversed the motor wiring.
 //#define REVERSE_X_MOTOR
 //#define REVERSE_Y_MOTOR
 //#define REVERSE_Z_MOTOR
+//#define REVERSE_E_MOTOR_DIRECTION
 
-// E Motor Torque Settings
-// By default we have StealthChop2 Disabled for the E axis. This is due to the possibility of losing steps
-// due to the low torque nature of StealthChop2. If you want to quiet down the E motor you can uncomment the
-// below line. However, if you get lost steps and inconsistent extrusion then disable this option.
-//#define STEALTHCHOP_E
-
-// Fix for Older EZABL Kits
-// If you are having issues with the EZABL not triggering when connected to the Z-Stop header you can use the servo header pins.
-// See here for details: https://www.th3dstudio.com/knowledgebase/ezabl-ezboard-not-triggering-fix/
-//#define V3_EZABL_ON_SERVO
-
-// E3D PT100 Thermocouple Support
-// Refer to the EZBoard installation documentation for connecting the PT100 to the EZBoard Expansion Header
-//#define EZBOARD_PT100
+// If you have a 5015 fan that whines when under 100% speed uncomment the below line.
+//#define FAN_FIX
 
 //===========================================================================
 // *************************  END PRINTER SECTION   *************************
@@ -171,6 +163,11 @@
 // Does your machine make weird noises/vibrations when it is probing the mesh? Enable this to slow down the speed between probe points.
 //#define SLOWER_PROBE_MOVES
 
+// Fix for Older EZABL Kits
+// If you are having issues with the EZABL not triggering when connected to the Z-Stop header you can use the servo header pins.
+// See here for details: https://www.th3dstudio.com/knowledgebase/ezabl-ezboard-not-triggering-fix/
+//#define V3_EZABL_ON_SERVO
+
 //================================================================================
 // IF YOU HAVE A CUSTOM PROBE MOUNT OR ONE THAT IS NOT PRE-SUPPORTED UNCOMMENT THE
 // CUSTOM_PROBE OPTION IN YOUR PRINTER SECTION AND ENTER YOUR PROBE LOCATION BELOW
@@ -205,16 +202,16 @@
 //===========================================================================
 
 // EXTRUDER SETTINGS -------------------------------
-// Use to set custom esteps and/or reverse your E Motor direction if you are installing an extruder that needs the direction reversed.
-// If you reversed the wiring on your E motor already (like the Bondtech Guide says to do) then you do not need to reverse it in the firmware here.
+// Used to set custom ESteps for your E Motor if installing an extruder that needs a predefined ESteps value.
 
 // If you want to change the Esteps for your printer you can uncomment the below line and set CUSTOM_ESTEPS_VALUE to what you want - USE WHOLE NUMBERS ONLY
-// This option sets the esteps from the CUSTOM_ESTEPS_VALUE line below.
-// If you need to reverse the e motor direction also enabled the REVERSE_E_MOTOR_DIRECTION option.
-// Example EStep Values: TH3D Aluminum Extruder - 95 ESteps, TH3D Tough Extruder - 463 ESteps, BMG Extruder - 415 ESteps
-// When installing a Tough Extruder or E3D Titan or Bondtech that is Geared you likely need to enable the REVERSE_E_MOTOR_DIRECTION option
+// Example EStep Values ---------------------------- 
+// Stock/TH3D Aluminum Extruder            95 ESteps 
+// E3D Hemera Direct Drive/Bowden         409 ESteps 
+// E3D Titan/TH3D Tough Extruder          463 ESteps
+// BMG Extruder                           415 ESteps
+
 //#define CUSTOM_ESTEPS
-//#define REVERSE_E_MOTOR_DIRECTION
 #define CUSTOM_ESTEPS_VALUE 463
 
 // If you are using a pancake stepper enable the PANCAKE_STEPPER option to reduce the motor current to lower the stepper temperature
@@ -229,17 +226,21 @@
 
 // THERMISTOR SETTINGS -----------------------------
 
-// If you are using an E3D V6 Hotend (or Hemera) with their cartridge thermistor (not glass version) uncomment the below line.
-//#define V6_HOTEND
-
 // If you are using a Tough Hotend from TH3D or any thermistors TH3D sells for your hotend uncomment the below line.
 //#define TH3D_HOTEND_THERMISTOR
 
 // If you are using a thermistor TH3D sells for your bed uncomment the below line.
 //#define TH3D_BED_THERMISTOR
 
+// If you are using an E3D V6 Hotend (or Hemera) with their cartridge thermistor (not glass version) uncomment the below line.
+//#define V6_HOTEND
+
 // If you are using a Keenovo with SSR and the Keenovo temperature sensor uncomment the below line.
 //#define KEENOVO_TEMPSENSOR
+
+// E3D PT100 Thermocouple Support
+// Refer to the EZBoard installation documentation for connecting the PT100 to the EZBoard Expansion Header
+//#define EZBOARD_PT100
 
 // If you are using a known hotend thermistor value uncomment the below 2 lines and enter the thermistor number replacing the X after the #define KNOWN_HOTEND_THERMISTOR_VALUE
 //#define KNOWN_HOTEND_THERMISTOR
@@ -274,14 +275,17 @@
 
 // MISC --------------------------------------------
 
-// If you have a 5015 fan that whines when under 100% speed uncomment the below line.
-//#define FAN_FIX
-
 // Use your own printer name
 //#define USER_PRINTER_NAME "CHANGE ME"
 
 // If your printer is homing to the endstops hard uncomment this to change the homing speed/divisor to make it less aggressive.
 //#define SLOWER_HOMING
+
+// E Motor Torque Settings
+// By default we have StealthChop2 Disabled for the E axis. This is due to the possibility of losing steps
+// due to the low torque nature of StealthChop2. If you want to quiet down the E motor you can uncomment the
+// below line. However, if you get lost steps and inconsistent extrusion then disable this option.
+//#define STEALTHCHOP_E
 
 //===========================================================================
 //****************** COMMUNITY REQUESTED FEATURES ***************************
