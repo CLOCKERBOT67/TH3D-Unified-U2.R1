@@ -5,11 +5,18 @@
 //===========================================================================
 //======================= DO NOT MODIFY THIS FILE ===========================
 //===========================================================================
+#if ENABLED(KINGROON_KP3)
+  #define X_DRIVER_TYPE  A4988
+  #define Y_DRIVER_TYPE  A4988
+  #define Z_DRIVER_TYPE  A4988
+  #define E0_DRIVER_TYPE A4988
+#else
+  #define X_DRIVER_TYPE  TMC2208
+  #define Y_DRIVER_TYPE  TMC2208
+  #define Z_DRIVER_TYPE  TMC2208
+  #define E0_DRIVER_TYPE TMC2208
+#endif
 
-#define X_DRIVER_TYPE  TMC2208
-#define Y_DRIVER_TYPE  TMC2208
-#define Z_DRIVER_TYPE  TMC2208
-#define E0_DRIVER_TYPE TMC2208
 
 //Sensor Mounts
 #if ENABLED(CUSTOM_PROBE)
@@ -253,6 +260,101 @@
   #define EZBOARD
 
 #endif //end CR-10
+
+// Kingroon Settings
+#if ENABLED(KINGROON_KP3)
+  #ifndef MOTHERBOARD
+    #define MOTHERBOARD BOARD_MKS_ROBIN_MINI
+  #endif
+
+  #define SERIAL_PORT 3
+  #define SERIAL_PORT_2 -1
+  #define BAUDRATE 115200
+
+  #define SQUARE_WAVE_STEPPING
+
+  #define EXTRUDERS 1
+
+  #define FSMC_GRAPHICAL_TFT
+  #define TOUCH_BUTTONS
+  #if ENABLED(TOUCH_BUTTONS)
+    #define BUTTON_DELAY_EDIT 150 // (ms) Button repeat delay for edit screens
+    #define BUTTON_DELAY_MENU 200 // (ms) Button repeat delay for menus
+
+    #define XPT2046_X_CALIBRATION   12316
+    #define XPT2046_Y_CALIBRATION  -8981
+    #define XPT2046_X_OFFSET       -43
+    #define XPT2046_Y_OFFSET        257
+  #endif
+
+  #define SDIO_SUPPORT
+  #define SPI_SPEED SPI_HALF_SPEED
+  //#define SPI_SPEED SPI_QUARTER_SPEED
+  //#define SPI_SPEED SPI_EIGHTH_SPEED
+  #define SD_CHECK_AND_RETRY
+
+  #define X_BED_SIZE 180
+  #define Y_BED_SIZE 180
+  #define Z_MAX_POS 180
+  #define PRINTER_VOLTAGE_24
+
+  #if ENABLED(CUSTOM_ESTEPS)
+    #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, CUSTOM_ESTEPS_VALUE }
+    #else
+      #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 95 }
+  #endif
+
+  #define DEFAULT_MAX_FEEDRATE          { 200, 200, 15, 50 }
+  #define DEFAULT_MAX_ACCELERATION      { 1000, 1000, 500, 5000 }
+
+  #define DEFAULT_ACCELERATION          500
+  #define DEFAULT_RETRACT_ACCELERATION  500
+  #define DEFAULT_TRAVEL_ACCELERATION   500
+
+  #define X_MIN_ENDSTOP_INVERTING true
+  #define Y_MIN_ENDSTOP_INVERTING true
+  #define Z_MIN_ENDSTOP_INVERTING true
+  #define Z_MIN_PROBE_ENDSTOP_INVERTING true
+
+  #if ENABLED(REVERSE_X_MOTOR)
+    #define INVERT_X_DIR true
+  #else
+    #define INVERT_X_DIR false
+  #endif
+
+  #if ENABLED(REVERSE_Y_MOTOR)
+    #define INVERT_Y_DIR true
+  #else
+    #define INVERT_Y_DIR false
+  #endif
+
+  #if ENABLED(REVERSE_Z_MOTOR)
+    #define INVERT_Z_DIR false
+  #else
+      #define INVERT_Z_DIR true
+  #endif
+
+  #if ENABLED(REVERSE_E_MOTOR_DIRECTION)
+      #define INVERT_E0_DIR true
+  #else
+      #define INVERT_E0_DIR false
+  #endif
+  
+ #if ENABLED(HOME_ADJUST)
+    #define X_MIN_POS X_HOME_LOCATION
+    #define Y_MIN_POS Y_HOME_LOCATION
+  #else
+    #define X_MIN_POS 0
+    #define Y_MIN_POS 0
+  #endif
+
+   #if ENABLED(CUSTOM_ZHEIGHT)
+    #undef Z_MAX_POS
+    #define Z_MAX_POS CUSTOM_ZHEIGHT
+  #endif
+
+ #define PRINTER_ENABLED_CHECK
+#endif //end Kingroon
 
 //Machine Check
 #if DISABLED(PRINTER_ENABLED_CHECK)
@@ -591,7 +693,7 @@
   #define MAX_SOFTWARE_ENDSTOP_Z
 #endif
 
-#if ENABLED(EZOUTV2_ENABLE) || ENABLED(CR10S_STOCKFILAMENTSENSOR)
+#if ENABLED(EZOUTV2_ENABLE) || ENABLED(CR10S_STOCKFILAMENTSENSOR) || ENABLED(KINGROON_KP3)
   #define FILAMENT_RUNOUT_SENSOR
   #if ENABLED(FILAMENT_RUNOUT_SENSOR)
     #if ENABLED(EZOUTV2_ENABLE)
@@ -649,7 +751,11 @@
 
 #define PRINTJOB_TIMER_AUTOSTART
 
-#define DISPLAY_CHARSET_HD44780 WESTERN
+#if DISABLED(KINGROON_KP3)
+  #define DISPLAY_CHARSET_HD44780 WESTERN
+#else 
+  #define DISPLAY_CHARSET_HD44780 JAPANESE
+#endif
 
 #define LCD_INFO_SCREEN_STYLE 0
 
@@ -665,7 +771,9 @@
   #define LEVEL_CORNERS_Z_HOP 5.0
 #endif
 
-#define SPEAKER
+#if DISABLED(KINGROON_KP3)
+  #define SPEAKER
+#endif
 
 #if ENABLED(FAN_FIX)
   #define FAN_SOFT_PWM
